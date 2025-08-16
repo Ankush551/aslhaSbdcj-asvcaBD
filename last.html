@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>For My Beloved Friend</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&family=Quicksand:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      overflow-x: hidden;
+      background: radial-gradient(circle at top, #fff1f2, #ffe4e6, #ffe3ec);
+      transition: background 1s ease;
+    }
+
+    /* Fade animations */
+    .fade-in-up {
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 1.2s ease-out forwards;
+    }
+
+    .fade-in-image {
+      opacity: 0;
+      transform: translateY(50px);
+      animation: fadeInImage 1.5s ease-out forwards;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInImage {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .delay-1 { animation-delay: 1.8s; }
+    .delay-2 { animation-delay: 3.2s; }
+
+    /* Raining Rakhi */
+    .rakhi-rain {
+      position: fixed;
+      top: -50px;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.6;
+    }
+
+    .rakhi-fall {
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-100vh) rotate(0deg);
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .heart-pulse {
+      animation: heartPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes heartPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+
+    .pink-heading {
+      background: linear-gradient(135deg, #ec4899, #f472b6, #fb7185, #facc15);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 600;
+      animation: shimmer 3s ease-in-out infinite;
+    }
+
+    @keyframes shimmer {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    /* Floating Hearts */
+    .floating-heart {
+      position: fixed;
+      bottom: -40px;
+      font-size: 24px;
+      animation: floatUp 5s linear infinite;
+      z-index: 0;
+      opacity: 0.7;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 0.5;
+      }
+      100% {
+        transform: translateY(-100vh) scale(1.5);
+        opacity: 0;
+      }
+    }
+
+  </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center relative">
+
+  <!-- Raining Rakhi Background -->
+  <div id="rakhiRain" class="fixed inset-0 pointer-events-none z-0"></div>
+
+  <!-- Floating hearts -->
+  <div id="floatingHearts" class="fixed inset-0 pointer-events-none z-0"></div>
+
+  <!-- Main Content -->
+  <div class="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 py-8">
+
+    <!-- Heading -->
+    <div class="mb-10 fade-in-up">
+      <h1 class="pink-heading text-4xl md:text-5xl lg:text-6xl text-center tracking-wide">
+        Happy Landing Day my beloved Friend!
+      </h1>
+    </div>
+
+    <!-- Sister Image -->
+    <div class="mb-10">
+      <img id="sisterImage"
+        src="pic10.jpg"
+        alt="Raksha Bandhan"
+        class="fade-in-image w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 object-cover rounded-full border-8 border-pink-300 shadow-xl transition-transform hover:scale-105"
+      >
+    </div>
+
+    <!-- Message Text -->
+    <div class="text-center space-y-6 max-w-md md:max-w-xl">
+      <div class="fade-in-up delay-1">
+        <p class="text-lg md:text-xl lg:text-2xl text-gray-800">
+            "I know this photo may not be perfect, but it marks the beginning of countless beautiful moments. That’s why it will always remain a cherished memory."
+            <br>
+            No matter how far we are…
+        </p>
+      </div>
+
+      <div class="fade-in-up delay-2">
+        <p class="font-semibold text-2xl md:text-4xl lg:text-5xl text-rose-600 flex items-center justify-center gap-2">
+            I will always be by your side......
+                </p>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Raining Rakhi
+    function createRakhiRain() {
+      const rakhiRainContainer = document.getElementById('rakhiRain');
+
+      function createRakhiSVG() {
+        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('width', '24');
+        svg.setAttribute('height', '24');
+        svg.innerHTML = `
+          <circle cx="12" cy="12" r="8" fill="none" stroke="#f472b6" stroke-width="2"/>
+          <circle cx="12" cy="12" r="4" fill="#facc15"/>
+          <path d="M12 4v16M4 12h16" stroke="#ec4899" stroke-width="1"/>
+        `;
+        return svg;
+      }
+
+      function createFallingRakhi() {
+        const rakhi = document.createElement('div');
+        rakhi.className = 'rakhi-rain rakhi-fall';
+        rakhi.appendChild(createRakhiSVG());
+
+        rakhi.style.left = Math.random() * 100 + 'vw';
+        const duration = Math.random() * 6 + 8;
+        rakhi.style.animationDuration = duration + 's';
+        rakhi.style.animationDelay = Math.random() * 3 + 's';
+
+        rakhiRainContainer.appendChild(rakhi);
+
+        setTimeout(() => {
+          if (rakhi.parentNode) rakhi.parentNode.removeChild(rakhi);
+        }, (duration + 3) * 1000);
+      }
+
+      for (let i = 0; i < 10; i++) setTimeout(createFallingRakhi, i * 500);
+      setInterval(createFallingRakhi, 1500);
+    }
+
+    // Floating Hearts
+    function createFloatingHearts() {
+      const container = document.getElementById('floatingHearts');
+      setInterval(() => {
+        const heart = document.createElement('div');
+        heart.className = 'floating-heart';
+        heart.innerText = '💖';
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.fontSize = `${20 + Math.random() * 20}px`;
+        heart.style.animationDuration = `${3 + Math.random() * 4}s`;
+        container.appendChild(heart);
+        setTimeout(() => heart.remove(), 8000);
+      }, 1000);
+    }
+
+    // Fallback Image
+    document.getElementById('sisterImage').addEventListener('error', function () {
+      this.style.display = 'none';
+      const placeholder = document.createElement('div');
+      placeholder.className = 'fade-in-image w-64 h-64 bg-gradient-to-br from-orange-200 to-red-200 rounded-full shadow-2xl flex items-center justify-center';
+      placeholder.innerHTML = `<div class="text-center"><div class="text-6xl mb-2">🎁</div><p class="text-gray-600">Raksha Bandhan</p></div>`;
+      this.parentNode.appendChild(placeholder);
+    });
+
+    // Init
+    window.addEventListener('load', function () {
+      setTimeout(createRakhiRain, 1000);
+      createFloatingHearts();
+    });
+  </script>
+
+</body>
+</html>
